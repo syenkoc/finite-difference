@@ -36,6 +36,6 @@ public interface GradientFunction
 	 * @param x The point.
 	 * @return The value of the gradient.
 	 */
-	public double[] gradient(double... x);
+	public double[] value(double... x);
 
 }

@@ -61,6 +61,9 @@ public final class FiniteDifferenceCoefficientGeneratorTest
 		testCore(FiniteDifference.THREE_POINT_CENTRAL, -0.5, 0, 0.5);
 	}
 	
+	/**
+	 * Third order central stencil.
+	 */
 	@Test
 	public void thirdOrderCentral()
 	{
@@ -75,7 +78,7 @@ public final class FiniteDifferenceCoefficientGeneratorTest
 	 * @param finiteDifference The finite difference.
 	 * @param expected The coefficients.
 	 */
-	private void testCore(final FiniteDifference finiteDifference, final double... expected)
+	private static void testCore(final FiniteDifference finiteDifference, final double... expected)
 	{
 		FiniteDifferenceCoefficientGenerator generator = new FiniteDifferenceCoefficientGenerator(finiteDifference);
 		double[] generated = generator.getCoefficients();

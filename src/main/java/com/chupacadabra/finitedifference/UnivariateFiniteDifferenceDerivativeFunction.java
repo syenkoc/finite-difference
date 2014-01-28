@@ -23,67 +23,60 @@
  */ 
 package com.chupacadabra.finitedifference;
 
+import com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth;
 import com.chupacadabra.finitedifference.util.DotProduct;
 
 
 /**
- * Base class for univariate real finite difference function.
+ * Univariate finite difference derivative function.
  */
-public abstract class AbstractFiniteDifferenceUnivariateDerivativeFunction
+public class UnivariateFiniteDifferenceDerivativeFunction
 	implements UnivariateFunction
 {
 
 	/**
 	 * The function.
 	 */
-	protected final UnivariateFunction function;
+	private final UnivariateFunction function;
+	
+	/**
+	 * The bandwidth function.
+	 */
+	private final UnivariateBandwidth bandwidthFunction;
 	
 	/**
 	 * The finite difference.
 	 */
-	protected final FiniteDifference finiteDifference;
-	
-	/**
-	 * The coefficients.
-	 */
-	protected final double[] coefficients;
-	
+	private final FiniteDifference finiteDifference;
+			
 	/**
 	 * Constructor.
 	 * 
-	 * @param function The function. 
+	 * @param function The function.
+	 * @param bandwidthFunction The bandwidth function.
 	 * @param finiteDifference The finite difference.
 	 */
-	protected AbstractFiniteDifferenceUnivariateDerivativeFunction(
-			final UnivariateFunction function, 
+	public UnivariateFiniteDifferenceDerivativeFunction(
+			final UnivariateFunction function,
+			final UnivariateBandwidth bandwidthFunction,
 			final FiniteDifference finiteDifference)
 	{
 		this.function = function;
+		this.bandwidthFunction = bandwidthFunction;
 		this.finiteDifference = finiteDifference;
-		
-		// grab the coefficients.
-		coefficients = finiteDifference.getCoefficients();
 	}
-	
+
 	/**
 	 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
 	 */
 	public double value(final double x)
 	{
-		double gridWidth = getGridWidth(x);
+		double gridWidth = bandwidthFunction.value(x, finiteDifference, function);
 		double derivative = getDerivative(x, gridWidth);
 		
 		return derivative;
 	}
-	
-	/**
-	 * Get the grid width at the specified point.
-	 * 
-	 * @param x The point.
-	 * @return The width.
-	 */
-	protected abstract double getGridWidth(double x);
-	
+		
 	/**
 	 * Compute the derivative at the specified point, using the specified grid width. 
 	 * 
@@ -95,7 +88,7 @@ public abstract class AbstractFiniteDifferenceUnivariateDerivativeFunction
 	{
 		double[] valueGrid = getValueGrid(x, gridWidth);
 		
-		double dotProduct = DotProduct.of(valueGrid, coefficients);
+		double dotProduct = DotProduct.of(valueGrid, finiteDifference.getCoefficients());
 		double derivative = dotProduct / Math.pow(gridWidth, finiteDifference.getDerivativeOrder());
 		
 		return derivative;		

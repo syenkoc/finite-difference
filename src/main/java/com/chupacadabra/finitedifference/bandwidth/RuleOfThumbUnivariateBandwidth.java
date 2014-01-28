@@ -21,65 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
  * SOFTWARE.  
  */ 
-package com.chupacadabra.finitedifference;
+package com.chupacadabra.finitedifference.bandwidth;
+
+import com.chupacadabra.finitedifference.FiniteDifference;
+import com.chupacadabra.finitedifference.UnivariateFunction;
 
 
 /**
- * Uses {@linkplain RuleOfThumb rule-of-thumb} grid widths.
+ * Rule-of-thumb bandwidth.
  */
-public class RuleOfThumbFiniteDifferenceUnivariateDerivativeFunction
-	extends AbstractFiniteDifferenceUnivariateDerivativeFunction
+public class RuleOfThumbUnivariateBandwidth
+	implements UnivariateBandwidth
 {
-
-	/**
-	 * Should we use a power-of-two grid width.
-	 */
-	private final boolean usePowerOfTwo;
 	
+	/**
+	 * Use a power-of-two rule-of-thumb bandwidth.
+	 */
+	private boolean usePowerOfTwo;
+
 	/**
 	 * Constructor.
 	 * <p>
-	 * We default to using a power-of-two grid width.
-	 * 
-	 * @param function The function.
-	 * @param finiteDifference The finite difference.
+	 * This construct will use a power-of-two bandwidth.
 	 */
-	public RuleOfThumbFiniteDifferenceUnivariateDerivativeFunction(
-			final UnivariateFunction function, 
-			final FiniteDifference finiteDifference)
+	public RuleOfThumbUnivariateBandwidth()
 	{
-		this(function, finiteDifference, true);
+		this(true);
 	}
-	
+
 	/**
 	 * Constructor.
 	 * 
-	 * @param function The function.
-	 * @param finiteDifference The finite difference.
-	 * @param usePowerOfTwo Should we use a power-of-two grid width.
+	 * @param usePowerOfTwo <code>true</code> to use a power-of-two bandwidth;
+	 *            and <code>false</code> to not do so.
 	 */
-	public RuleOfThumbFiniteDifferenceUnivariateDerivativeFunction(
-			final UnivariateFunction function, 
-			final FiniteDifference finiteDifference,
-			final boolean usePowerOfTwo)
+	public RuleOfThumbUnivariateBandwidth(final boolean usePowerOfTwo)
 	{
-		super(function, finiteDifference);
-
 		this.usePowerOfTwo = usePowerOfTwo;
 	}
 
-
 	/**
-	 * @see com.chupacadabra.finitedifference.AbstractFiniteDifferenceUnivariateDerivativeFunction#getGridWidth(double)
+	 * @see com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth#value(double, com.chupacadabra.finitedifference.FiniteDifference, com.chupacadabra.finitedifference.UnivariateFunction)
 	 */
-	@Override
-	protected double getGridWidth(final double x)
+	public double value(final double x, 
+			final FiniteDifference finiteDifference,
+			final UnivariateFunction function)
 	{
 		double gridWidth = usePowerOfTwo ? 
-				RuleOfThumb.getPowerOfTwoRuleOfThumbGridWidth(x, finiteDifference) :
-				RuleOfThumb.getRuleOfThumbGridWidth(x, finiteDifference);
+				RuleOfThumb.getPowerOfTwoRuleOfThumbBandwidth(x, finiteDifference) :
+				RuleOfThumb.getRuleOfThumbBandwidth(x, finiteDifference);
 				
 		return gridWidth;
 	}
-
+	
 }

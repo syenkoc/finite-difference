@@ -21,45 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
  * SOFTWARE.  
  */ 
-package com.chupacadabra.finitedifference;
+package com.chupacadabra.finitedifference.bandwidth;
+
+import com.chupacadabra.finitedifference.FiniteDifference;
+import com.chupacadabra.finitedifference.UnivariateFunction;
 
 
 /**
- * Fixed width finite difference univariate real derivative function.
+ * Fixed univariate bandwidth strategy.
  */
-public class FixedFiniteDifferenceUnivariateDerivativeFunction
-	extends AbstractFiniteDifferenceUnivariateDerivativeFunction
+public class FixedUnivariateBandwidth
+	implements UnivariateBandwidth
 {
 	
 	/**
-	 * The grid width.
+	 * The bandwidth.
 	 */
-	private final double gridWidth;
-	
+	private final double bandwidth;
+
 	/**
 	 * Constructor.
 	 * 
-	 * @param function The function.
-	 * @param finiteDifference Finite grid width.
-	 * @param gridWidth The grid width.
+	 * @param bandwidth The (fixed) bandwidth to use.
 	 */
-	public FixedFiniteDifferenceUnivariateDerivativeFunction(
-			final UnivariateFunction function, 
-			final FiniteDifference finiteDifference,
-			final double gridWidth)
+	public FixedUnivariateBandwidth(final double bandwidth)
 	{
-		super(function, finiteDifference);
-		
-		this.gridWidth = gridWidth;
+		this.bandwidth = bandwidth;
 	}
 
 	/**
-	 * @see com.chupacadabra.finitedifference.AbstractFiniteDifferenceUnivariateDerivativeFunction#getGridWidth(double)
+	 * @see com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth#value(double, com.chupacadabra.finitedifference.FiniteDifference, com.chupacadabra.finitedifference.UnivariateFunction)
 	 */
-	@Override
-	protected double getGridWidth(final double x)
-	{		
-		return gridWidth;
+	public double value(final double x, 
+			final FiniteDifference finiteDifference,
+			final UnivariateFunction function)
+	{
+		return bandwidth;
 	}
 
 }

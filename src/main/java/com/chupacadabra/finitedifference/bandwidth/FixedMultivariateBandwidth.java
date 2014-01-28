@@ -21,38 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
  * SOFTWARE.  
  */ 
-package com.chupacadabra.finitedifference;
+package com.chupacadabra.finitedifference.bandwidth;
+
+import com.chupacadabra.finitedifference.MultivariateFiniteDifference;
+import com.chupacadabra.finitedifference.MultivariateFunction;
 
 
 /**
- * 
+ * Fixed width multivariate bandwidth strategy.
  */
-public class MathurOptimalFiniteDifferenceGradientFunction
-	extends AbstractFiniteDifferenceGradientFunction
+public class FixedMultivariateBandwidth
+	implements MultivariateBandwidth
 {
+	
+	/**
+	 * The bandwidths.
+	 */
+	private final double[] bandwidths;
 
 	/**
-	 * @param function
-	 * @param finiteDifferences
+	 * @param bandwidths
 	 */
-	public MathurOptimalFiniteDifferenceGradientFunction(
-			final MultivariateFunction function,
-			final FiniteDifference... finiteDifferences)
+	public FixedMultivariateBandwidth(final double[] bandwidths)
 	{
-		super(function, finiteDifferences);
+		this.bandwidths = bandwidths;
 	}
 
 	/**
-	 * @see com.chupacadabra.finitedifference.AbstractFiniteDifferenceGradientFunction#getDerivative(com.chupacadabra.finitedifference.UnivariateFunction, com.chupacadabra.finitedifference.FiniteDifference)
+	 * @see com.chupacadabra.finitedifference.bandwidth.MultivariateBandwidth#value(double[], com.chupacadabra.finitedifference.MultivariateFiniteDifference, com.chupacadabra.finitedifference.MultivariateFunction)
 	 */
-	@Override
-	protected UnivariateFunction getDerivative(
-			final UnivariateFunction index,
-			final FiniteDifference finiteDifference)
+	public double[] value(final double[] x,
+			final MultivariateFiniteDifference finiteDifference,
+			final MultivariateFunction function)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return bandwidths;
 	}
-
 	
 }

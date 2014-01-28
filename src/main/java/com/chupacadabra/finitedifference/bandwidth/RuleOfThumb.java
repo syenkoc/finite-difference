@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.chupacadabra.finitedifference;
+package com.chupacadabra.finitedifference.bandwidth;
 
+import com.chupacadabra.finitedifference.FiniteDifference;
 import com.chupacadabra.finitedifference.util.MachineEpsilon;
 import com.chupacadabra.finitedifference.util.PowerOfTwo;
 
@@ -107,7 +108,7 @@ import com.chupacadabra.finitedifference.util.PowerOfTwo;
  * <code>|x<sub>0</sub>|</code> itself (except near 0).
  * <p>
  * In general, it is recommended that you use 
- * {@linkplain #getPowerOfTwoRuleOfThumbGridWidth(double, FiniteDifference) power-of-two}
+ * {@linkplain #getPowerOfTwoRuleOfThumbBandwidth(double, FiniteDifference) power-of-two}
  * grid widths, as then <code>x +/- h</code> will be computed exactly (i.e. 
  * without any representation error).  
  * <p>
@@ -123,7 +124,7 @@ public final class RuleOfThumb
 	 * @param finiteDifference The finite difference.
 	 * @return The rule of the thumb grid width.
 	 */
-	public static double getRuleOfThumbGridWidth(final double x,
+	public static double getRuleOfThumbBandwidth(final double x,
 			final FiniteDifference finiteDifference)
 	{
 		double sum = 0;
@@ -170,10 +171,10 @@ public final class RuleOfThumb
 	 * @param finiteDifference The finite difference.
 	 * @return The rule of the thumb grid width.
 	 */
-	public static double getPowerOfTwoRuleOfThumbGridWidth(final double x,
+	public static double getPowerOfTwoRuleOfThumbBandwidth(final double x,
 			final FiniteDifference finiteDifference)
 	{
-		double gridWidth = getRuleOfThumbGridWidth(x, finiteDifference);				
+		double gridWidth = getRuleOfThumbBandwidth(x, finiteDifference);				
 
 		double powerOfTwoWidth = PowerOfTwo.nextLargestPowerOfTwo(gridWidth);
 		

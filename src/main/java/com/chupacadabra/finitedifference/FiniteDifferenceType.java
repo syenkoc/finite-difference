@@ -25,7 +25,7 @@ package com.chupacadabra.finitedifference;
 
 
 /**
- * Finite difference types.
+ * Finite difference type.
  */
 public enum FiniteDifferenceType
 {

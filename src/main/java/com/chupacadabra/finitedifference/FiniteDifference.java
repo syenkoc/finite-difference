@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 
 /**
- * A finite difference descriptor.
+ * A univariate finite difference descriptor.
  */
 public final class FiniteDifference
 	implements Serializable

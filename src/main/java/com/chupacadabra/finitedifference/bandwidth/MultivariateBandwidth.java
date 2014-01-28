@@ -21,13 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
  * SOFTWARE.  
  */ 
-package com.chupacadabra.finitedifference;
+package com.chupacadabra.finitedifference.bandwidth;
+
+import com.chupacadabra.finitedifference.MultivariateFiniteDifference;
+import com.chupacadabra.finitedifference.MultivariateFunction;
 
 
 /**
- * 
+ * A multivariate bandwidth function.
  */
-public class RuleOfThumbFiniteDifferenceGradientFunction
+public interface MultivariateBandwidth
 {
+	
+	/**
+	 * Get bandwidths for the specified function at the specified point.
+	 * 
+	 * @param x The point.
+	 * @param finiteDifference The finite difference.
+	 * @param function The function.
+	 * @return The bandwidths.
+	 */
+	public double[] value(double[] x, MultivariateFiniteDifference finiteDifference, MultivariateFunction function);
 
 }

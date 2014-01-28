@@ -23,35 +23,45 @@
  */ 
 package com.chupacadabra.finitedifference;
 
+import com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth;
+
 
 /**
- * Base class for gradient functions.
+ * Finite difference gradient function with pluggable bandwidth.
  */
-public abstract class AbstractFiniteDifferenceGradientFunction
+public class FiniteDifferenceGradientFunction
 	implements GradientFunction
 {
 
 	/**
 	 * The function.
 	 */
-	protected final MultivariateFunction function;
+	private final MultivariateFunction function;
 	
+	/**
+	 * The bandwidth functions.
+	 */
+	private final UnivariateBandwidth[] bandwidthFunctions;
+
 	/**
 	 * The finite difference.
 	 */
-	private final FiniteDifference[] finiteDifferences;	
-	
+	private final FiniteDifference[] finiteDifferences;
+		
 	/**
 	 * Constructor.
 	 * 
-	 * @param function
-	 * @param finiteDifferences
+	 * @param function The function.
+	 * @param bandwidthFunctions The bandwidth functions.
+	 * @param finiteDifferences The finite differences.
 	 */
-	protected AbstractFiniteDifferenceGradientFunction(
+	public FiniteDifferenceGradientFunction(
 			final MultivariateFunction function,
-			final FiniteDifference... finiteDifferences)
+			final UnivariateBandwidth[] bandwidthFunctions,
+			final FiniteDifference[] finiteDifferences)
 	{
 		this.function = function;		
+		this.bandwidthFunctions = bandwidthFunctions;
 		this.finiteDifferences = finiteDifferences;
 		
 		for(FiniteDifference finiteDifference : finiteDifferences)
@@ -64,31 +74,22 @@ public abstract class AbstractFiniteDifferenceGradientFunction
 	}
 
 	/**
-	 * @see com.chupacadabra.finitedifference.GradientFunction#gradient(double[])
+	 * @see com.chupacadabra.finitedifference.GradientFunction#value(double[])
 	 */
-	public double[] gradient(final double... x)
+	public double[] value(final double... x)
 	{
 		double[] gradient = new double[x.length];
 		for(int index = 0; index < gradient.length; index++)
 		{
 			UnivariateFunction partial = new PartiallyEvaluatedMultivariateFunction(function, x, index);
-			UnivariateFunction derivative = getDerivative(partial, finiteDifferences[index]);
-			
+			UnivariateFunction derivative = new UnivariateFiniteDifferenceDerivativeFunction(partial, bandwidthFunctions[index], finiteDifferences[index]);
+					
 			gradient[index] = derivative.value(x[index]);
 		}
 		
 		return gradient;
 	}
-	
-	/**
-	 * Get the derivative of the specified function using the specified stencil descriptor.
-	 * 
-	 * @param index The index<sup>th</sup> function.
-	 * @param finiteDifference The finite difference descriptor.
-	 * @return The derivative.
-	 */
-	protected abstract UnivariateFunction getDerivative(UnivariateFunction index, FiniteDifference finiteDifference);
-	
+			
 	/**
 	 * Partially evaluated function.
 	 */
