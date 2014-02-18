@@ -330,6 +330,7 @@ public final class BigRational
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+	@Override
 	public int compareTo(final BigRational that)
 	{
 		BigInteger left = numerator.multiply(that.denominator);

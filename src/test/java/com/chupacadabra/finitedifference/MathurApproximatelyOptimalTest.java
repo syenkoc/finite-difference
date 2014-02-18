@@ -21,25 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
  * SOFTWARE.  
  */ 
-package com.chupacadabra.finitedifference.function;
+package com.chupacadabra.finitedifference;
 
-import com.chupacadabra.finitedifference.UnivariateFunction;
+import com.chupacadabra.finitedifference.bandwidth.MathurApproximatelyOptimalUnivariateBandwidth;
+import com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth;
 
 
 /**
- * Cosine.
+ * Tests for Mathur approximately optimal bandwidth.
  */
-public class Cosine
-	implements UnivariateFunction
+public final class MathurApproximatelyOptimalTest
+	extends AbstractUnivariateFiniteDifferenceFunctionTest
 {
 
 	/**
-	 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
+	 * @see com.chupacadabra.finitedifference.AbstractUnivariateFiniteDifferenceFunctionTest#getBandwidth()
 	 */
 	@Override
-	public double value(double x)
+	protected UnivariateBandwidth getBandwidth()
 	{
-		return Math.cos(x);
+		return new MathurApproximatelyOptimalUnivariateBandwidth();
 	}
-	
+
 }

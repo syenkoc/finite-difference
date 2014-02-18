@@ -50,6 +50,7 @@ public class FixedMultivariateBandwidth
 	/**
 	 * @see com.chupacadabra.finitedifference.bandwidth.MultivariateBandwidth#value(double[], com.chupacadabra.finitedifference.MultivariateFiniteDifference, com.chupacadabra.finitedifference.MultivariateFunction)
 	 */
+	@Override
 	public double[] value(final double[] x,
 			final MultivariateFiniteDifference finiteDifference,
 			final MultivariateFunction function)

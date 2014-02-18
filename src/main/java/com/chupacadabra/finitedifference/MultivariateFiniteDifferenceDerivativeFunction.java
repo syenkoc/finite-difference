@@ -85,6 +85,7 @@ public class MultivariateFiniteDifferenceDerivativeFunction
 	/**
 	 * @see com.chupacadabra.finitedifference.MultivariateFunction#value(double[])
 	 */
+	@Override
 	public double value(final double... x)
 	{
 		double[] gridWidths = bandwidthFunction.value(x, finiteDifference, function);

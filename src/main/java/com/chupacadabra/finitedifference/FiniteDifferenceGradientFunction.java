@@ -76,6 +76,7 @@ public class FiniteDifferenceGradientFunction
 	/**
 	 * @see com.chupacadabra.finitedifference.GradientFunction#value(double[])
 	 */
+	@Override
 	public double[] value(final double... x)
 	{
 		double[] gradient = new double[x.length];
@@ -132,6 +133,7 @@ public class FiniteDifferenceGradientFunction
 		/**
 		 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
 		 */
+		@Override
 		public double value(final double at)
 		{
 			double[] input = x.clone();

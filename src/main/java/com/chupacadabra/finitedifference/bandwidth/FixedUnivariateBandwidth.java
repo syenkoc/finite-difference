@@ -52,6 +52,7 @@ public class FixedUnivariateBandwidth
 	/**
 	 * @see com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth#value(double, com.chupacadabra.finitedifference.FiniteDifference, com.chupacadabra.finitedifference.UnivariateFunction)
 	 */
+	@Override
 	public double value(final double x, 
 			final FiniteDifference finiteDifference,
 			final UnivariateFunction function)

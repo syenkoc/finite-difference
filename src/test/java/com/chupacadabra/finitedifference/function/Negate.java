@@ -26,12 +26,15 @@ package com.chupacadabra.finitedifference.function;
 import com.chupacadabra.finitedifference.UnivariateFunction;
 
 /**
- * 
+ * Negation.
  */
 public class Negate
 	implements UnivariateFunction
 {
 
+	/**
+	 * The underlying function.
+	 */
 	private final UnivariateFunction function;
 
 	/**
@@ -45,6 +48,7 @@ public class Negate
 	/**
 	 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
 	 */
+	@Override
 	public double value(double x)
 	{
 		return -function.value(x);

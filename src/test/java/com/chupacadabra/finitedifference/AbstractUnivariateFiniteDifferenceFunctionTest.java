@@ -30,6 +30,7 @@ import org.junit.Test;
 import com.chupacadabra.finitedifference.FiniteDifference;
 import com.chupacadabra.finitedifference.FiniteDifferenceType;
 import com.chupacadabra.finitedifference.UnivariateFunction;
+import com.chupacadabra.finitedifference.bandwidth.UnivariateBandwidth;
 import com.chupacadabra.finitedifference.function.Cosine;
 import com.chupacadabra.finitedifference.function.Exp;
 import com.chupacadabra.finitedifference.function.Negate;
@@ -38,7 +39,7 @@ import com.chupacadabra.finitedifference.function.Sine;
 /**
  * Base class for univariate real finite difference tests.
  */
-public abstract class AbstractUnivariateRealFiniteDifferenceFunctionTest
+public abstract class AbstractUnivariateFiniteDifferenceFunctionTest
 {
 
 	/**
@@ -74,12 +75,11 @@ public abstract class AbstractUnivariateRealFiniteDifferenceFunctionTest
 		FiniteDifference finiteDifference = new FiniteDifference(FiniteDifferenceType.CENTRAL, 2, 4);		
 		testCore(exp, finiteDifference, exp, 0, 100000, 1000);		
 	}
-
 	
 	/**
 	 * Second-order sine.
 	 */
-	//@Test
+	@Test
 	public void secondOrderSin()
 	{
 		Sine sin = new Sine();
@@ -89,17 +89,13 @@ public abstract class AbstractUnivariateRealFiniteDifferenceFunctionTest
 		testCore(sin, finiteDifference, derivative, 0, 4 * Math.PI, 10000, null, 1e-3);
 	}
 	
-
 	/**
 	 * Get a derivative for the specified function using the specified finite
 	 * difference stencil.
 	 * 
-	 * @param function The function.
-	 * @param finiteDifference The finite difference.
 	 * @return The derivative function.
 	 */
-	protected abstract UnivariateFunction getDerivative(
-			UnivariateFunction function, FiniteDifference finiteDifference);
+	protected abstract UnivariateBandwidth getBandwidth();
 
 	/**
 	 * Get the default relative error.
@@ -159,13 +155,15 @@ public abstract class AbstractUnivariateRealFiniteDifferenceFunctionTest
 	 */
 	protected void testCore(final UnivariateFunction function,
 			final FiniteDifference finiteDifference,
-			final UnivariateFunction derivative, final double lowerBound,
-			final double upperBound, final int steps,
+			final UnivariateFunction derivative, 
+			final double lowerBound,
+			final double upperBound, 
+			final int steps,
 			final Double relativeErrorThreshold,
 			final Double absoluteErrorThreshold)
 	{
-		UnivariateFunction finiteDifferenceDerivative = getDerivative(
-				function, finiteDifference);
+		UnivariateBandwidth bandwidthFunction = getBandwidth();
+		UnivariateFunction finiteDifferenceDerivative = new UnivariateFiniteDifferenceDerivativeFunction(function, bandwidthFunction, finiteDifference);
 
 		double step = (upperBound - lowerBound) / steps;
 		for(double value = lowerBound; value <= upperBound; value += step)

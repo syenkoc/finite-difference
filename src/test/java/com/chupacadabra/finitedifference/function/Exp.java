@@ -36,6 +36,7 @@ public class Exp
 	/**
 	 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
 	 */
+	@Override
 	public double value(final double x)
 	{
 		return Math.exp(x);

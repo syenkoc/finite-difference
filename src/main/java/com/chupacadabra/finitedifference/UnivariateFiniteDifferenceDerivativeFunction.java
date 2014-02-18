@@ -69,6 +69,7 @@ public class UnivariateFiniteDifferenceDerivativeFunction
 	/**
 	 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
 	 */
+	@Override
 	public double value(final double x)
 	{
 		double gridWidth = bandwidthFunction.value(x, finiteDifference, function);
@@ -112,8 +113,6 @@ public class UnivariateFiniteDifferenceDerivativeFunction
 			// amount of error to accumulate!
 			double inputValue = x + (gridWidth * multiplier);
 			values[index] = function.value(inputValue);
-			
-			inputValue += gridWidth;
 		}
 		
 		return values;

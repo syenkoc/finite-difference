@@ -71,7 +71,6 @@ public final class FiniteDifferenceCoefficientGeneratorTest
 		testCore(finiteDifference, -0.5, 0, 0.5);
 	}
 
-	
 	/**
 	 * Core tester.
 	 *  

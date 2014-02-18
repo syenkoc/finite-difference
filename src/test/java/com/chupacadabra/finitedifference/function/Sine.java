@@ -36,6 +36,7 @@ public class Sine
 	/**
 	 * @see com.chupacadabra.finitedifference.UnivariateFunction#value(double)
 	 */
+	@Override
 	public double value(double x)
 	{
 		return Math.sin(x);
